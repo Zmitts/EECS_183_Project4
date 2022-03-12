@@ -29,11 +29,21 @@ Ship::Ship() {
 
 Ship::Ship(Position start_in, Position end_in) {
     // TODO: write implementation here.
+    num_hits = 0;
     start.set_row(start_in.get_row());
     start.set_col(start_in.get_col());
     end.set_row(end_in.get_row());
     end.set_col(end_in.get_col());
-   
+
+    if (!is_horizontal()) {
+        size = abs(start.get_row() - end.get_row()) + 1;
+    }
+    else {
+        size = abs(start.get_col() - end.get_col()) + 1;
+    }
+
+
+
 }
 
 Position Ship::get_start() {
@@ -60,10 +70,10 @@ bool Ship::is_horizontal() {
     else {
         return true;
     }
-    
+
 }
 
-bool Ship::has_position(Position pos) {
+bool Ship::has_position(Position pos) { // this just doesn't work
     // TODO: write implementation here.
     if (!is_horizontal()) {
         if (start.get_row() > end.get_row()) {
@@ -77,14 +87,14 @@ bool Ship::has_position(Position pos) {
         }
         else {
             if (pos.get_col() == start.get_col() && pos.get_col() == end.get_col()
-                && pos.get_row() <= start.get_row() && pos.get_row() >= end.get_row()) {
+                && pos.get_row() >= start.get_row() && pos.get_row() <= end.get_row()) {
                 return true;
             }
             else {
                 return false;
             }
         }
-       
+
 
     }
     else {
@@ -106,17 +116,25 @@ bool Ship::has_position(Position pos) {
                 return false;
             }
         }
-        
+
     }
-    
+
 }
 
 void Ship::hit() {
     // TODO: write implementation here.
+    if (num_hits < size) {
+        ++num_hits;
+    }
     return;
 }
 
 bool Ship::has_sunk() {
     // TODO: write implementation here.
-    return false;
+    if (num_hits == size) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
