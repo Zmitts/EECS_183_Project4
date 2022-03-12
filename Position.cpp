@@ -126,4 +126,3 @@ ostream& operator<<(ostream& os, Position pos) {
     pos.write(os);
     return os;
 }
-
